@@ -3,8 +3,8 @@ audioSegment
 tensorflow
 pandas
 scipy
-matplotlib.pyplot
+matplotlib
 numpy
-plotly.express
+plotly
 sklearn
-urllib.request
+urllib
