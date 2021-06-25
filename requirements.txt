@@ -2,8 +2,6 @@ opencv-python-headless
 audioSegment
 tensorflow
 pandas
-scipy
 matplotlib
 numpy
-plotly
 sklearn
