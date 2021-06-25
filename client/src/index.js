@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+// import App from './App';
+import Predict from '../src/pages/Predict/index';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Switch>
+      <Route path='/' exact render={props => <Predict {...props} />} />
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

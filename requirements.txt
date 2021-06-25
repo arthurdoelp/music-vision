@@ -1,0 +1,10 @@
+opencv-python-headless
+audioSegment
+tensorflow
+pandas
+scipy
+matplotlib.pyplot
+numpy
+plotly.express
+sklearn
+urllib.request
