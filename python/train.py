@@ -8,7 +8,7 @@ import audiosegment
 import numpy as np
 import pandas as pd
 # import tensorflow as tf
-from keras.applications.mobilenet import MobileNet
+from keras.applications.mobilenet_v2 import MobileNetV2
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -52,7 +52,7 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 
 # Create keras model for feature extraction
 # model = tf.keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-model = MobileNet(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+model = MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
 predictions = model.predict(images.reshape(-1, 224, 224, 3))
 pred_images = predictions.reshape(images.shape[0], -1)
 
@@ -68,8 +68,8 @@ model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': 
 
 # SONG PREDICTION
 
-filename = sys.argv[1]
-# filename = 'uploads/03_Baby_Cant_Leave_it_Alone.m4a'
+# filename = sys.argv[1]
+filename = 'uploads/03_Baby_Cant_Leave_it_Alone.m4a'
 # filepath = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/05_Stayin_Alive.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
