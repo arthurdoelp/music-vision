@@ -18,7 +18,7 @@ import urllib.request
 import cloudinary
 import cloudinary.api
 
-audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 cloudinary.config( 
   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
