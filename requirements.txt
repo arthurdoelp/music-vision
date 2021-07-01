@@ -1,6 +1,6 @@
 opencv-python-headless
 audioSegment
-tensorflow-cpu
+keras
 pandas
 matplotlib
 numpy
