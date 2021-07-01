@@ -66,8 +66,9 @@ model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': 
 
 # SONG PREDICTION
 
-filename = sys.argv[1]
-# filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/05_Stayin_Alive.m4a'
+# filename = sys.argv[1]
+filename = 'uploads/03_Baby_Cant_Leave_it_Alone.m4a'
+# filepath = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/05_Stayin_Alive.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[8:-4]
