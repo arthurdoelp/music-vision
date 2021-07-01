@@ -7,8 +7,7 @@ import matplotlib.pyplot as plot
 import audiosegment
 import numpy as np
 import pandas as pd
-import keras
-# import tensorflow as tf 
+import tensorflow as tf 
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -51,7 +50,7 @@ for url in urls:
 images = np.array(np.float32(images).reshape(len(images), -1)/255)
 
 # Create keras model for feature extraction
-model = keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+model = tf.keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
 predictions = model.predict(images.reshape(-1, 224, 224, 3))
 pred_images = predictions.reshape(images.shape[0], -1)
 

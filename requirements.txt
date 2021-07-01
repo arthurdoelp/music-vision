@@ -1,9 +1,10 @@
 opencv-python-headless
 audioSegment
-keras
+tensorflow-cpu
 pandas
 matplotlib
 numpy
 sklearn
 cloudinary
 python-dotenv
+librosa
