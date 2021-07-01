@@ -11,3 +11,74 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.file-input-wrapper {
+  border: #cccccc solid 1px;
+  border-radius: 4px;
+  padding: 1em;
+}
+
+.file-selected-false {
+  display: inline-block;
+  color: #cccccc;
+}
+
+.file-selected-true {
+  display: inline-block;
+}
+
+.file-input-button {
+  width: 0.1px;
+height: 0.1px;
+opacity: 0;
+overflow: hidden;
+position: absolute;
+z-index: -1;
+}
+
+.file-input-button + label {
+  color: white;
+  border-radius: 4px;
+  padding: .5em 1em;
+  background-color: #5B95DA;
+  display: inline-block;
+}
+
+.file-input-button:focus + label {
+outline: 1px dotted #000;
+outline: -webkit-focus-ring-color auto 5px;
+}
+
+.file-input-button + label:hover {
+  background-color: rgb(81, 129, 189);
+  cursor: pointer;
+}
+
+.file-input-button-disabled {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input-button-disabled + label {
+  color: white;
+  border-radius: 4px;
+  padding: .5em 1em;
+  background-color: #cccccc;
+  display: inline-block;
+}
+
+.song-summary-stats {
+  border: 1px solid #5B95DA;
+  border-radius: 4px;
+  background-color: #5B95DA;
+  color: #ffffff;
+  padding: 1em;
+}
+
+.similar-songs {
+  padding-left: 0;
+}

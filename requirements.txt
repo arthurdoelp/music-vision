@@ -4,5 +4,7 @@ tensorflow-cpu
 pandas
 matplotlib
 numpy
-plotly
 sklearn
+cloudinary
+python-dotenv
+librosa
