@@ -7,4 +7,3 @@ numpy
 sklearn
 cloudinary
 python-dotenv
-librosa
