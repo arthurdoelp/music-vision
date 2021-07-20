@@ -77,7 +77,7 @@ print(model_predictions_df.head())
 
 # filename = sys.argv[1]
 # filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
-filename = '../uploads/03_Baby_Cant_Leave_it_Alone.m4a'
+filename = '/app/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[8:-4]
