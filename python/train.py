@@ -58,12 +58,14 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # pred_images = predictions.reshape(images.shape[0], -1)
 # print(pred_images)
 
+predictions = images.reshape(-1, 224, 224, 3)
+pred_images = predictions.reshape(images.shape[0], -1)
 
 # K-Means Model
 k = 70
 kmodel = KMeans(n_clusters = k, random_state=728)
-kmodel.fit(images)
-kpredictions = kmodel.predict(images)
+kmodel.fit(pred_images)
+kpredictions = kmodel.predict(pred_images)
 # print(kpredictions)
 
 
@@ -75,10 +77,11 @@ print(model_predictions_df.head())
 
 # filename = sys.argv[1]
 # filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
-filename = 'uploads/03_Baby_Cant_Leave_it_Alone.m4a'
+filename = '../uploads/03_Baby_Cant_Leave_it_Alone.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[8:-4]
+# file_id = filename[69:-4]
 # print(file_id)
 # Create the audiosegment file
 seg = audiosegment.from_file(filepath)
