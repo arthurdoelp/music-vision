@@ -96,12 +96,12 @@ plot.pcolormesh(times, freqs, amplitudes)
 plot.axis('off')
 plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
-prediction_image_file_path = os.path.abspath("../prediction_image") + "/" + file_id + '.png'
+prediction_image_file_path = os.path.abspath("/app/prediction_image") + "/" + file_id + '.png'
 plot.savefig(prediction_image_file_path)
 
 
 # Run the prediction method to compare prediction image against the model
-pred_image_dir = os.path.abspath("../prediction_image")
+pred_image_dir = os.path.abspath("/app/prediction_image")
 pred_image_glob_dir = pred_image_dir + '/*.png'
 img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 img = np.array(np.float32(img).reshape(len(img), -1)/255)
@@ -119,7 +119,7 @@ filtered_model_predictions_df = model_predictions_df[model_predictions_df["kpred
 song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
-song_performance_excel_filepath = os.path.abspath("../songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("/app/songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
