@@ -1,6 +1,5 @@
 opencv-python-headless
 audioSegment
-keras
 pandas
 matplotlib
 numpy

@@ -7,8 +7,7 @@ import matplotlib.pyplot as plot
 import audiosegment
 import numpy as np
 import pandas as pd
-# import tensorflow as tf
-from keras.applications.mobilenet_v2 import MobileNetV2
+from sklearn.feature_extraction import image
 from sklearn.cluster import KMeans
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -19,7 +18,7 @@ import urllib.request
 import cloudinary
 import cloudinary.api
 
-# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 cloudinary.config( 
   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
@@ -49,28 +48,33 @@ for url in urls:
 
 # Read images and reshape the images for prep for feature extraction
 images = np.array(np.float32(images).reshape(len(images), -1)/255)
+# print(images)
 
 # Create keras model for feature extraction
 # model = tf.keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-model = MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-predictions = model.predict(images.reshape(-1, 224, 224, 3))
-pred_images = predictions.reshape(images.shape[0], -1)
+# print(model)
+# predictions = model.predict(images.reshape(-1, 224, 224, 3))
+# print(predictions)
+# pred_images = predictions.reshape(images.shape[0], -1)
+# print(pred_images)
+
 
 # K-Means Model
 k = 70
-kmodel = KMeans(n_clusters = k, n_jobs=-1, random_state=728)
-kmodel.fit(pred_images)
-kpredictions = kmodel.predict(pred_images)
+kmodel = KMeans(n_clusters = k, random_state=728)
+kmodel.fit(images)
+kpredictions = kmodel.predict(images)
+# print(kpredictions)
 
 
 model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
+# print(model_predictions_df.head())
 
 
 # SONG PREDICTION
 
-# filename = sys.argv[1]
-filename = 'uploads/03_Baby_Cant_Leave_it_Alone.m4a'
-# filepath = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/05_Stayin_Alive.m4a'
+filename = sys.argv[1]
+# filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[8:-4]
@@ -97,9 +101,9 @@ pred_image_dir = os.path.abspath("prediction_image")
 pred_image_glob_dir = pred_image_dir + '/*.png'
 img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 img = np.array(np.float32(img).reshape(len(img), -1)/255)
-prediction = model.predict(img.reshape(-1, 224, 224, 3))
-pred_image = prediction.reshape(img.shape[0], -1)
-kprediction = kmodel.predict(pred_image)
+# prediction = model.predict(img.reshape(-1, 224, 224, 3))
+# pred_image = prediction.reshape(img.shape[0], -1)
+kprediction = kmodel.predict(img)
 kprediction = str(kprediction).strip('[]')
 kprediction = int(kprediction)
 # print("Cluster:",kprediction)
