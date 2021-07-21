@@ -80,7 +80,7 @@ print(model_predictions_df.head())
 filename = '/app/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
 filepath = os.path.abspath(filename)
 # print(str(filepath))
-file_id = filename[8:-4]
+file_id = filename[13:-4]
 # file_id = filename[69:-4]
 # print(file_id)
 # Create the audiosegment file
