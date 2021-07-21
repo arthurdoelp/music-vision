@@ -30,14 +30,14 @@ exports.predictController = (req, res) => {
             song_filename = song_filename.replace(")", "")
             song_filename = song_filename.replace("'", "")
         }
-        let file_path = 'uploads/' + song_filename;
+        let file_path = 'python/uploads/' + song_filename;
 
         fs.writeFile(file_path, song.buffer, { encoding: 'base64' }, function (err) {
             console.log('File created');
         });
         console.log("Starting Python Script");
         // // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
-        const pythonProcess = spawn('python', ["python/train.py", file_path]);
+        const pythonProcess = spawn('python', ["python/train.py", song_filename]);
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
