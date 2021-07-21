@@ -18,7 +18,7 @@ import urllib.request
 import cloudinary
 import cloudinary.api
 
-audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 cloudinary.config( 
   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
@@ -80,7 +80,7 @@ model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': 
 # filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
 filename = '03_Baby_Cant_Leave_it_Alone.m4a'
 # filepath = os.path.abspath(os.path.join("python/uploads", filename))
-filepath = os.path.abspath(os.path.join("uploads", filename))
+filepath = os.path.abspath(os.path.join("python/uploads", filename))
 # filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[:-4]
@@ -101,14 +101,14 @@ plot.axis('off')
 plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
 # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-prediction_image_file_path = os.path.abspath("prediction_image") + "/" + file_id + '.png'
+prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 # print(str(prediction_image_file_path))
 plot.savefig(prediction_image_file_path)
 
 
 # Run the prediction method to compare prediction image against the model
 # pred_image_dir = os.path.abspath("python/prediction_image")
-pred_image_dir = os.path.abspath("prediction_image")
+pred_image_dir = os.path.abspath("python/prediction_image")
 pred_image_glob_dir = pred_image_dir + '/*.png'
 img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 img = np.array(np.float32(img).reshape(len(img), -1)/255)
