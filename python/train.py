@@ -42,7 +42,7 @@ for url in urls:
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     # image = cv2.resize(image, (224, 224))
-    image = cv2.resize(image, (72, 48))
+    image = cv2.resize(image, (54, 36))
     image = image[:,:,0]
     images.append(image)
     id = url[79:-11]
@@ -97,7 +97,7 @@ seg = seg.set_channels(1)
 freqs, times, amplitudes = seg.spectrogram(window_length_s=.03, overlap=.5)
 amplitudes = 10 * np.log10(amplitudes + 1e-9)
 # Plot the spectrogram using time as the x axis, frequency as y axis and amplitude as color gradient
-plot.pcolormesh(times, freqs, amplitudes)
+plot.pcolormesh(times, freqs, amplitudes, shading='auto')
 # Remove all axis graphics so we have just the image of the spectrogram contents and nothing else
 plot.axis('off')
 plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
@@ -114,7 +114,7 @@ plot.savefig(prediction_image_file_path)
 # pred_image_glob_dir = pred_image_dir + '/*.png'
 # img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 # img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
-imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (72, 48))]
+imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (54, 36))]
 imgs = [img[:,:,0] for img in imgs]
 imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 # prediction = model.predict(img.reshape(-1, 224, 224, 3))
@@ -132,7 +132,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
