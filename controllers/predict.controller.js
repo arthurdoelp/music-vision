@@ -37,7 +37,8 @@ exports.predictController = (req, res) => {
     //     });
         console.log("Starting Python Script");
         // // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
-        const pythonProcess = spawn('python', ["python/train.py", song_filename]);
+        // const pythonProcess = spawn('python', ["python/train.py", song_filename]);
+        const pythonProcess = spawn('python', ["python/train.py"]);
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
