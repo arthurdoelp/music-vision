@@ -18,7 +18,7 @@ import urllib.request
 import cloudinary
 import cloudinary.api
 
-# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 cloudinary.config( 
   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
@@ -127,7 +127,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
@@ -189,7 +189,7 @@ output = {
   'total_revenues': total_revenues
 }
 
-os.remove(prediction_image_file_path)
+# os.remove(prediction_image_file_path)
 
 output = json.dumps(output)
 print(output)
