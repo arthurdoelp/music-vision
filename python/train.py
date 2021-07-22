@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 import cv2
-import os, glob, json
+import os, json
 import urllib.request
 import cloudinary
 import cloudinary.api
@@ -42,7 +42,7 @@ for url in urls:
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     # image = cv2.resize(image, (224, 224))
-    image = cv2.resize(image, (54, 36))
+    image = cv2.resize(image, (27, 18))
     image = image[:,:,0]
     images.append(image)
     id = url[79:-11]
@@ -114,7 +114,7 @@ plot.savefig(prediction_image_file_path)
 # pred_image_glob_dir = pred_image_dir + '/*.png'
 # img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 # img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
-imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (54, 36))]
+imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (27, 18))]
 imgs = [img[:,:,0] for img in imgs]
 imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 # prediction = model.predict(img.reshape(-1, 224, 224, 3))
