@@ -8,7 +8,7 @@ import audiosegment
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction import image
-from sklearn.cluster import KMeans
+from sklearn.cluster import MiniBatchKMeans
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
@@ -65,7 +65,7 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 
 # K-Means Model
 k = 45
-kmodel = KMeans(n_clusters = k, random_state=728)
+kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
 kmodel.fit(images)
 kpredictions = kmodel.predict(images)
 # print(kpredictions)
@@ -82,7 +82,7 @@ model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': 
 # filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
 filename = '03_Baby_Cant_Leave_it_Alone.m4a'
 # filepath = os.path.abspath(os.path.join("python/uploads", filename))
-filepath = os.path.abspath(os.path.join("uploads", filename))
+filepath = os.path.abspath(os.path.join("python/uploads", filename))
 # filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[:-4]
@@ -103,7 +103,7 @@ plot.axis('off')
 plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
 # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-prediction_image_file_path = os.path.abspath("prediction_image") + "/" + file_id + '.png'
+prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 # print(str(prediction_image_file_path))
 plot.savefig(prediction_image_file_path)
 
@@ -132,7 +132,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
