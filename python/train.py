@@ -41,7 +41,9 @@ for url in urls:
     resp = urllib.request.urlopen(url)
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-    image = cv2.resize(image, (224, 224))
+    # image = cv2.resize(image, (224, 224))
+    image = cv2.resize(image, (72, 48))
+    image = image[:,:,0]
     images.append(image)
     id = url[79:-11]
     ids.append(id)
@@ -58,14 +60,14 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # pred_images = predictions.reshape(images.shape[0], -1)
 # print(pred_images)
 
-predictions = images.reshape(-1, 224, 224, 3)
-pred_images = predictions.reshape(images.shape[0], -1)
+# predictions = images.reshape(-1, 108, 72, 3)
+# pred_images = predictions.reshape(images.shape[0], -1)
 
 # K-Means Model
 k = 55
 kmodel = KMeans(n_clusters = k, random_state=728)
-kmodel.fit(pred_images)
-kpredictions = kmodel.predict(pred_images)
+kmodel.fit(images)
+kpredictions = kmodel.predict(images)
 # print(kpredictions)
 
 
@@ -108,13 +110,16 @@ plot.savefig(prediction_image_file_path)
 
 # Run the prediction method to compare prediction image against the model
 # pred_image_dir = os.path.abspath("python/prediction_image")
-pred_image_dir = os.path.abspath("python/prediction_image")
-pred_image_glob_dir = pred_image_dir + '/*.png'
-img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
-img = np.array(np.float32(img).reshape(len(img), -1)/255)
+# pred_image_dir = os.path.abspath("prediction_image")
+# pred_image_glob_dir = pred_image_dir + '/*.png'
+# img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
+# img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
+imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (72, 48))]
+imgs = [img[:,:,0] for img in imgs]
+imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 # prediction = model.predict(img.reshape(-1, 224, 224, 3))
 # pred_image = prediction.reshape(img.shape[0], -1)
-kprediction = kmodel.predict(img)
+kprediction = kmodel.predict(imgs)
 kprediction = str(kprediction).strip('[]')
 kprediction = int(kprediction)
 # print("Cluster:",kprediction)
@@ -127,7 +132,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
