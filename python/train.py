@@ -26,7 +26,7 @@ cloudinary.config(
   api_secret = os.environ.get("CLOUDINARY_API_SECRET")
 )
 
-results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 200)
+results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
 
 urls = []
 for result in results["resources"]:
@@ -64,7 +64,7 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # pred_images = predictions.reshape(images.shape[0], -1)
 
 # K-Means Model
-k = 45
+k = 10
 kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
 kmodel.fit(images)
 kpredictions = kmodel.predict(images)
