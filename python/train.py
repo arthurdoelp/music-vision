@@ -7,7 +7,6 @@ import matplotlib.pyplot as plot
 import audiosegment
 import numpy as np
 import pandas as pd
-from sklearn.feature_extraction import image
 from sklearn.cluster import MiniBatchKMeans
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -42,7 +41,7 @@ for url in urls:
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
     # image = cv2.resize(image, (224, 224))
-    image = cv2.resize(image, (12, 8))
+    image = cv2.resize(image, (9, 6))
     image = image[:,:,0]
     images.append(image)
     id = url[79:-11]
@@ -64,7 +63,7 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # pred_images = predictions.reshape(images.shape[0], -1)
 
 # K-Means Model
-k = 10
+k = 3
 kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
 kmodel.fit(images)
 kpredictions = kmodel.predict(images)
@@ -114,7 +113,7 @@ plot.savefig(prediction_image_file_path)
 # pred_image_glob_dir = pred_image_dir + '/*.png'
 # img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 # img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
-imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (12, 8))]
+imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (9, 6))]
 imgs = [img[:,:,0] for img in imgs]
 imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 # prediction = model.predict(img.reshape(-1, 224, 224, 3))

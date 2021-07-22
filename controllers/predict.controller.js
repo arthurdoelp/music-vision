@@ -50,13 +50,13 @@ exports.predictController = (req, res) => {
             // console.log(result)
             console.log(JSON.parse(result));
 
-            fs.unlink(file_path, (err) => {
-                if (err) {
-                    console.error(err)
-                    return
-                }
-                //file removed
-            })
+            // fs.unlink(file_path, (err) => {
+            //     if (err) {
+            //         console.error(err)
+            //         return
+            //     }
+            //     //file removed
+            // })
 
             res.json({ data: JSON.parse(result) })
         });
