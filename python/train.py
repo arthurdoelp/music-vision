@@ -19,13 +19,13 @@ import cloudinary.api
 
 audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
-cloudinary.config( 
-  cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
-  api_key = os.environ.get("CLOUDINARY_API_KEY"), 
-  api_secret = os.environ.get("CLOUDINARY_API_SECRET")
-)
+# cloudinary.config( 
+#   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
+#   api_key = os.environ.get("CLOUDINARY_API_KEY"), 
+#   api_secret = os.environ.get("CLOUDINARY_API_SECRET")
+# )
 
-results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
+# results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
 
 # urls = []
 # for result in results["resources"]:
