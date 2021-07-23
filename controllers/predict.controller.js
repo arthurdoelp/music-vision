@@ -38,28 +38,29 @@ exports.predictController = (req, res) => {
         console.log("Starting Python Script");
         // // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
         // const pythonProcess = spawn('python', ["python/train.py", song_filename]);
-        const pythonProcess = spawn('python', ["python/train.py"]);
+        // const pythonProcess = spawn('python', ["python/train.py"]);
 
-        let result = '';
-        pythonProcess.stdout.on('data', (data) => {
-            // console.log(data);
-            result += data.toString();
-        });
+        // let result = '';
+        // pythonProcess.stdout.on('data', (data) => {
+        //     // console.log(data);
+        //     result += data.toString();
+        // });
 
-        pythonProcess.stdout.on('end', () => {
-            // console.log(result)
-            console.log(JSON.parse(result));
-            let hello = "hello"
+        // pythonProcess.stdout.on('end', () => {
+        //     // console.log(result)
+        //     console.log(JSON.parse(result));
+        //     let hello = "hello"
 
-            // fs.unlink(file_path, (err) => {
-            //     if (err) {
-            //         console.error(err)
-            //         return
-            //     }
-            //     //file removed
-            // })
-            res.json({ data: hello })
-            // res.json({ data: JSON.parse(result) })
-        });
+        //     // fs.unlink(file_path, (err) => {
+        //     //     if (err) {
+        //     //         console.error(err)
+        //     //         return
+        //     //     }
+        //     //     //file removed
+        //     // })
+        //     res.json({ data: hello })
+        //     // res.json({ data: JSON.parse(result) })
+        // });
+        res.json({ data: "Hello" })
     // })
 }
