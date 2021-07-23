@@ -70,58 +70,58 @@ kpredictions = kmodel.predict(images)
 # print(kpredictions)
 
 
-model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
-# print(model_predictions_df.head())
+# model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
+# # print(model_predictions_df.head())
 
 
-# SONG PREDICTION
+# # SONG PREDICTION
 
-# filename = sys.argv[1]
-# filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
-# filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
-filename = '03_Baby_Cant_Leave_it_Alone.m4a'
+# # filename = sys.argv[1]
+# # filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
+# # filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
+# filename = '03_Baby_Cant_Leave_it_Alone.m4a'
+# # filepath = os.path.abspath(os.path.join("python/uploads", filename))
 # filepath = os.path.abspath(os.path.join("python/uploads", filename))
-filepath = os.path.abspath(os.path.join("python/uploads", filename))
-# filepath = os.path.abspath(filename)
-# print(str(filepath))
-file_id = filename[:-4]
-# file_id = filename[13:-4]
-# file_id = filename[69:-4]
-# print(file_id)
-# Create the audiosegment file
-seg = audiosegment.from_file(filepath)
-# Convert any 2 channel tracks to mono so that it can be converted into a spec
-seg = seg.set_channels(1)
-# Create the spectrogram
-freqs, times, amplitudes = seg.spectrogram(window_length_s=.03, overlap=.5)
-amplitudes = 10 * np.log10(amplitudes + 1e-9)
-# Plot the spectrogram using time as the x axis, frequency as y axis and amplitude as color gradient
-plot.pcolormesh(times, freqs, amplitudes, shading='auto')
-# Remove all axis graphics so we have just the image of the spectrogram contents and nothing else
-plot.axis('off')
-plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
-# Save the file to the prediction_image folder with the file name
+# # filepath = os.path.abspath(filename)
+# # print(str(filepath))
+# file_id = filename[:-4]
+# # file_id = filename[13:-4]
+# # file_id = filename[69:-4]
+# # print(file_id)
+# # Create the audiosegment file
+# seg = audiosegment.from_file(filepath)
+# # Convert any 2 channel tracks to mono so that it can be converted into a spec
+# seg = seg.set_channels(1)
+# # Create the spectrogram
+# freqs, times, amplitudes = seg.spectrogram(window_length_s=.03, overlap=.5)
+# amplitudes = 10 * np.log10(amplitudes + 1e-9)
+# # Plot the spectrogram using time as the x axis, frequency as y axis and amplitude as color gradient
+# plot.pcolormesh(times, freqs, amplitudes, shading='auto')
+# # Remove all axis graphics so we have just the image of the spectrogram contents and nothing else
+# plot.axis('off')
+# plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
+# # Save the file to the prediction_image folder with the file name
+# # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-# print(str(prediction_image_file_path))
-plot.savefig(prediction_image_file_path)
+# # print(str(prediction_image_file_path))
+# plot.savefig(prediction_image_file_path)
 
 
-# Run the prediction method to compare prediction image against the model
-# pred_image_dir = os.path.abspath("python/prediction_image")
-# pred_image_dir = os.path.abspath("prediction_image")
-# pred_image_glob_dir = pred_image_dir + '/*.png'
-# img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
-# img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
-imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (9, 6))]
-imgs = [img[:,:,0] for img in imgs]
-imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
-# prediction = model.predict(img.reshape(-1, 224, 224, 3))
-# pred_image = prediction.reshape(img.shape[0], -1)
-kprediction = kmodel.predict(imgs)
-kprediction = str(kprediction).strip('[]')
-kprediction = int(kprediction)
-# print("Cluster:",kprediction)
+# # Run the prediction method to compare prediction image against the model
+# # pred_image_dir = os.path.abspath("python/prediction_image")
+# # pred_image_dir = os.path.abspath("prediction_image")
+# # pred_image_glob_dir = pred_image_dir + '/*.png'
+# # img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
+# # img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
+# imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (9, 6))]
+# imgs = [img[:,:,0] for img in imgs]
+# imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
+# # prediction = model.predict(img.reshape(-1, 224, 224, 3))
+# # pred_image = prediction.reshape(img.shape[0], -1)
+# kprediction = kmodel.predict(imgs)
+# kprediction = str(kprediction).strip('[]')
+# kprediction = int(kprediction)
+# # print("Cluster:",kprediction)
 
 
 # # Collect Song Ids
@@ -198,7 +198,7 @@ kprediction = int(kprediction)
 # output = json.dumps(output)
 # print(output)
 output = {
-  "prediction": kprediction
+  "prediction": kpredictions
 }
 output = json.dumps(output)
 print(output)
