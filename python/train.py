@@ -27,47 +27,47 @@ cloudinary.config(
 
 results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
 
-urls = []
-for result in results["resources"]:
-    url = result["url"]
-    urls.append(url)
+# urls = []
+# for result in results["resources"]:
+#     url = result["url"]
+#     urls.append(url)
 
-images = []
-ids = []
+# images = []
+# ids = []
 
-# Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
-for url in urls:
-    resp = urllib.request.urlopen(url)
-    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-    # image = cv2.resize(image, (224, 224))
-    image = cv2.resize(image, (9, 6))
-    image = image[:,:,0]
-    images.append(image)
-    id = url[79:-11]
-    ids.append(id)
+# # Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
+# for url in urls:
+#     resp = urllib.request.urlopen(url)
+#     image = np.asarray(bytearray(resp.read()), dtype="uint8")
+#     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+#     # image = cv2.resize(image, (224, 224))
+#     image = cv2.resize(image, (9, 6))
+#     image = image[:,:,0]
+#     images.append(image)
+#     id = url[79:-11]
+#     ids.append(id)
 
-# Read images and reshape the images for prep for feature extraction
-images = np.array(np.float32(images).reshape(len(images), -1)/255)
-# print(images)
+# # Read images and reshape the images for prep for feature extraction
+# images = np.array(np.float32(images).reshape(len(images), -1)/255)
+# # print(images)
 
-# Create keras model for feature extraction
-# model = tf.keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-# print(model)
-# predictions = model.predict(images.reshape(-1, 224, 224, 3))
-# print(predictions)
-# pred_images = predictions.reshape(images.shape[0], -1)
-# print(pred_images)
+# # Create keras model for feature extraction
+# # model = tf.keras.applications.MobileNetV2(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
+# # print(model)
+# # predictions = model.predict(images.reshape(-1, 224, 224, 3))
+# # print(predictions)
+# # pred_images = predictions.reshape(images.shape[0], -1)
+# # print(pred_images)
 
-# predictions = images.reshape(-1, 108, 72, 3)
-# pred_images = predictions.reshape(images.shape[0], -1)
+# # predictions = images.reshape(-1, 108, 72, 3)
+# # pred_images = predictions.reshape(images.shape[0], -1)
 
-# K-Means Model
-k = 2
-kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
-kmodel.fit(images)
-kpredictions = kmodel.predict(images)
-# print(kpredictions)
+# # K-Means Model
+# k = 2
+# kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
+# kmodel.fit(images)
+# kpredictions = kmodel.predict(images)
+# # print(kpredictions)
 
 
 # model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
