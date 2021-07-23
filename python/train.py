@@ -63,7 +63,7 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # pred_images = predictions.reshape(images.shape[0], -1)
 
 # K-Means Model
-k = 3
+k = 2
 kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
 kmodel.fit(images)
 kpredictions = kmodel.predict(images)
@@ -148,7 +148,7 @@ filtered_songs_df["Date"] = filtered_songs_df.index
 df_train, df_test = train_test_split(filtered_songs_df, test_size=0.3, random_state=99)
 
 target = "avg" #what is our y variable? which column is in our df?
- 
+
 features = ["Date"] # x vars or predictors
 
 x_train = df_train[features]
