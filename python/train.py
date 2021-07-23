@@ -124,77 +124,82 @@ kprediction = int(kprediction)
 # print("Cluster:",kprediction)
 
 
-# Collect Song Ids
-filtered_model_predictions_df = model_predictions_df[model_predictions_df["kpredictions"] == kprediction]["ids"].values.tolist()
-# print(filtered_model_predictions_df)
-song_ids = ["Date"] + filtered_model_predictions_df
+# # Collect Song Ids
+# filtered_model_predictions_df = model_predictions_df[model_predictions_df["kpredictions"] == kprediction]["ids"].values.tolist()
+# # print(filtered_model_predictions_df)
+# song_ids = ["Date"] + filtered_model_predictions_df
 
-# Load Song Performance Dataset
+# # Load Song Performance Dataset
+# # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-songs_df = pd.read_csv(song_performance_excel_filepath)
+# songs_df = pd.read_csv(song_performance_excel_filepath)
 
-# Filter dataset to reflect only the most similar songs
-filtered_songs_df = songs_df[song_ids]
+# # Filter dataset to reflect only the most similar songs
+# filtered_songs_df = songs_df[song_ids]
 
-# Create Weighted Average Column
-filtered_songs_df["avg"] = filtered_songs_df.mean(axis=1)
-filtered_songs_df["Date"] = filtered_songs_df.index
+# # Create Weighted Average Column
+# filtered_songs_df["avg"] = filtered_songs_df.mean(axis=1)
+# filtered_songs_df["Date"] = filtered_songs_df.index
 
 
-# REGRESSION MODEL
+# # REGRESSION MODEL
 
-# test vs training data
-df_train, df_test = train_test_split(filtered_songs_df, test_size=0.3, random_state=99)
+# # test vs training data
+# df_train, df_test = train_test_split(filtered_songs_df, test_size=0.3, random_state=99)
 
-target = "avg" #what is our y variable? which column is in our df?
+# target = "avg" #what is our y variable? which column is in our df?
 
-features = ["Date"] # x vars or predictors
+# features = ["Date"] # x vars or predictors
 
-x_train = df_train[features]
-y_train = df_train[target]
+# x_train = df_train[features]
+# y_train = df_train[target]
 
-x_test = df_test[features]
-y_test = df_test[target]
+# x_test = df_test[features]
+# y_test = df_test[target]
 
-# MODEL TRAINING
-regression = LinearRegression()
-regression.fit(x_train, y_train) 
+# # MODEL TRAINING
+# regression = LinearRegression()
+# regression.fit(x_train, y_train) 
 
-# MODEL EVALUATION
-y_train_pred = regression.predict(x_train)
+# # MODEL EVALUATION
+# y_train_pred = regression.predict(x_train)
 
-y_test_pred = regression.predict(x_test)
+# y_test_pred = regression.predict(x_test)
 
-adjusted_r_squared = 1 - (((1 - r2_score(y_test, y_test_pred)) * (len(x_test) - 1)) / (len(x_test) - len(features) - 1))
-adjusted_r_squared_percentage = "{:.2%}".format(adjusted_r_squared)
+# adjusted_r_squared = 1 - (((1 - r2_score(y_test, y_test_pred)) * (len(x_test) - 1)) / (len(x_test) - len(features) - 1))
+# adjusted_r_squared_percentage = "{:.2%}".format(adjusted_r_squared)
 
-# Predict the regression
-num_dates = []
+# # Predict the regression
+# num_dates = []
 
-for date in range(0,84):
-    num_date = len(filtered_songs_df) + date
-    num_dates.append(num_date)
+# for date in range(0,84):
+#     num_date = len(filtered_songs_df) + date
+#     num_dates.append(num_date)
 
-predicted_date_nums = pd.DataFrame(num_dates)
-regression_prediction = regression.predict(predicted_date_nums)
-prediction_df = pd.DataFrame(regression_prediction)
+# predicted_date_nums = pd.DataFrame(num_dates)
+# regression_prediction = regression.predict(predicted_date_nums)
+# prediction_df = pd.DataFrame(regression_prediction)
 
-# Calculates the present value of the revenues (10% / 365) to show the discounting each day
-prediction_df["revenues"] = ((prediction_df[0] * 0.00318) * (1/(1.0002739726027 ** (prediction_df[0].index + 1))))
+# # Calculates the present value of the revenues (10% / 365) to show the discounting each day
+# prediction_df["revenues"] = ((prediction_df[0] * 0.00318) * (1/(1.0002739726027 ** (prediction_df[0].index + 1))))
 
-total_plays = round(prediction_df.sum()[0], 0)
-total_revenues = round(prediction_df.sum()["revenues"], 2)
+# total_plays = round(prediction_df.sum()[0], 0)
+# total_revenues = round(prediction_df.sum()["revenues"], 2)
 
+# output = {
+#   'similar_songs': filtered_model_predictions_df,
+#   'adjusted_r_squared': adjusted_r_squared_percentage,
+#   'total_plays': total_plays,
+#   'total_revenues': total_revenues
+# }
+
+# # os.remove(prediction_image_file_path)
+
+# output = json.dumps(output)
+# print(output)
 output = {
-  'similar_songs': filtered_model_predictions_df,
-  'adjusted_r_squared': adjusted_r_squared_percentage,
-  'total_plays': total_plays,
-  'total_revenues': total_revenues
+  "prediction": kprediction
 }
-
-# os.remove(prediction_image_file_path)
-
 output = json.dumps(output)
 print(output)
 
