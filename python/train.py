@@ -21,36 +21,36 @@ import cloudinary.api
 
 audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
-cloudinary.config( 
-  cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
-  api_key = os.environ.get("CLOUDINARY_API_KEY"), 
-  api_secret = os.environ.get("CLOUDINARY_API_SECRET")
-)
+# cloudinary.config( 
+#   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
+#   api_key = os.environ.get("CLOUDINARY_API_KEY"), 
+#   api_secret = os.environ.get("CLOUDINARY_API_SECRET")
+# )
 
-results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
+# results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
 
-urls = []
-for result in results["resources"]:
-    url = result["url"]
-    urls.append(url)
+# urls = []
+# for result in results["resources"]:
+#     url = result["url"]
+#     urls.append(url)
 
-images = []
-ids = []
+# images = []
+# ids = []
 
-# Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
-for url in urls:
-    resp = urllib.request.urlopen(url)
-    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-    # image = cv2.resize(image, (224, 224))
-    image = cv2.resize(image, (9, 6))
-    image = image[:,:,0]
-    images.append(image)
-    id = url[79:-11]
-    ids.append(id)
+# # Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
+# for url in urls:
+#     resp = urllib.request.urlopen(url)
+#     image = np.asarray(bytearray(resp.read()), dtype="uint8")
+#     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+#     # image = cv2.resize(image, (224, 224))
+#     image = cv2.resize(image, (9, 6))
+#     image = image[:,:,0]
+#     images.append(image)
+#     id = url[79:-11]
+#     ids.append(id)
 
-# Read images and reshape the images for prep for feature extraction
-images = np.array(np.float32(images).reshape(len(images), -1)/255)
+# # Read images and reshape the images for prep for feature extraction
+# images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # print(images)
 
 # Create keras model for feature extraction
@@ -75,11 +75,13 @@ images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # joblib.dump(kmodel, joblib_file)
 
 kmodel = joblib.load(os.path.abspath("python/K_Means_Model.pkl"))
-kpredictions = kmodel.predict(images)
+# kpredictions = kmodel.predict(images)
 
-model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
+# model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
 # print(model_predictions_df.head())
+# model_predictions_df.to_csv(os.path.abspath("model_predictions.csv"))
 
+model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv"))
 
 # SONG PREDICTION
 
