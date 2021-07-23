@@ -49,6 +49,7 @@ exports.predictController = (req, res) => {
         pythonProcess.stdout.on('end', () => {
             // console.log(result)
             console.log(JSON.parse(result));
+            let hello = "hello"
 
             // fs.unlink(file_path, (err) => {
             //     if (err) {
@@ -57,8 +58,8 @@ exports.predictController = (req, res) => {
             //     }
             //     //file removed
             // })
-
-            res.json({ data: JSON.parse(result) })
+            res.json({ data: hello })
+            // res.json({ data: JSON.parse(result) })
         });
     // })
 }
