@@ -198,7 +198,7 @@ kpredictions = kmodel.predict(images)
 # output = json.dumps(output)
 # print(output)
 output = {
-  "prediction": kpredictions
+  "prediction": "hi"
 }
 output = json.dumps(output)
 print(output)
