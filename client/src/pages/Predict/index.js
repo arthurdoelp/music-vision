@@ -43,7 +43,7 @@ class Predict extends Component {
                     formData.append('file', file);
 
                     axios({
-                        url: '/api/predict/new',
+                        url: '/api/spectrogram/new',
                         method: 'POST',
                         headers: {
                             'Content-Type': 'multipart/form-data'
@@ -72,6 +72,14 @@ class Predict extends Component {
                             //     total_revenues: res.data.data.total_revenues,
                             //     song_name: song_name
                             // })
+
+                            axios.post("/api/predict/new", {
+
+                            }).then(result => {
+                                console.log(result.data.data)
+                            }).catch(error => {
+                                console.log(error)
+                            })
                         })
                         .catch(err => {
                             console.log(err)

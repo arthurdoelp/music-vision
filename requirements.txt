@@ -7,4 +7,3 @@ sklearn
 cloudinary
 python-dotenv
 librosa
-gunicorn

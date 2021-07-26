@@ -4,16 +4,7 @@ const spawn = require("child_process").spawn;
 const multer = require('multer');
 const fs = require('fs');
 
-exports.trainController = (req, res) => {
-    // console.log("Controller is connected!");
-    const pythonProcess = spawn('python', ["python/train.py"]);
-    pythonProcess.stdout.on('data', (data) => {
-        console.log(data);
-        res.json({ data: data })
-    });
-}
-
-exports.predictController = (req, res) => {
+exports.spectrogramController = (req, res) => {
     console.log("Controller connected!");
 
     const upload = multer({ storage: multer.memoryStorage() }).single('file')
@@ -60,4 +51,9 @@ exports.predictController = (req, res) => {
             res.json({ data: JSON.parse(result) })
         });
     })
+}
+
+exports.predictController = (req, res) => {
+    console.log("Second Controller is connected!");
+    res.json({ data: "I think it worked?" })
 }
