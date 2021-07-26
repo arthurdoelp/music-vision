@@ -1,11 +1,11 @@
 import sys
 import os, json
-import numpy as np
-import matplotlib.pyplot as plot
-import audiosegment
-from memory_profiler import profile
+# import numpy as np
+# import matplotlib.pyplot as plot
+# import audiosegment
+# from memory_profiler import profile
 
-audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 # SONG PREDICTION
 # @profile
@@ -15,7 +15,7 @@ audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 # filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
 filename = '03_Baby_Cant_Leave_it_Alone.m4a'
 # filepath = os.path.abspath(os.path.join("python/uploads", filename))
-filepath = os.path.abspath(os.path.join("python/uploads", filename))
+# filepath = os.path.abspath(os.path.join("uploads", filename))
 file_id = filename[:-4]
 # # file_id = filename[13:-4]
 # # file_id = filename[69:-4]
