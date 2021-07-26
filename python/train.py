@@ -18,6 +18,7 @@ import os, json
 import urllib.request
 import cloudinary
 import cloudinary.api
+from memory_profiler import profile
 
 audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
@@ -74,14 +75,16 @@ audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 # joblib_file = "K_Means_Model.pkl"
 # joblib.dump(kmodel, joblib_file)
 
-kmodel = joblib.load(os.path.abspath("python/K_Means_Model.pkl"))
+# @profile
+# def my_func():
+kmodel = joblib.load(os.path.abspath("K_Means_Model.pkl"))
 # kpredictions = kmodel.predict(images)
 
 # model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
 # print(model_predictions_df.head())
 # model_predictions_df.to_csv(os.path.abspath("model_predictions.csv"))
 
-model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv"))
+model_predictions_df = pd.read_csv(os.path.abspath("model_predictions.csv"))
 
 # SONG PREDICTION
 
@@ -90,7 +93,7 @@ model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv
 # filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
 filename = '03_Baby_Cant_Leave_it_Alone.m4a'
 # filepath = os.path.abspath(os.path.join("python/uploads", filename))
-filepath = os.path.abspath(os.path.join("python/uploads", filename))
+# filepath = os.path.abspath(os.path.join("uploads", filename))
 # filepath = os.path.abspath(filename)
 # print(str(filepath))
 file_id = filename[:-4]
@@ -98,22 +101,21 @@ file_id = filename[:-4]
 # file_id = filename[69:-4]
 # print(file_id)
 # Create the audiosegment file
-seg = audiosegment.from_file(filepath)
+# seg = audiosegment.from_file(filepath)
 # Convert any 2 channel tracks to mono so that it can be converted into a spec
-seg = seg.set_channels(1)
+# seg = seg.set_channels(1)
 # Create the spectrogram
-freqs, times, amplitudes = seg.spectrogram(window_length_s=.03, overlap=.5)
-amplitudes = 10 * np.log10(amplitudes + 1e-9)
+# freqs, times, amplitudes = seg.spectrogram(window_length_s=.03, overlap=.5)
+# amplitudes = 10 * np.log10(amplitudes + 1e-9)
 # Plot the spectrogram using time as the x axis, frequency as y axis and amplitude as color gradient
-plot.pcolormesh(times, freqs, amplitudes, shading='auto')
+# plot.pcolormesh(times, freqs, amplitudes, shading='auto')
 # Remove all axis graphics so we have just the image of the spectrogram contents and nothing else
-plot.axis('off')
-plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
+# plot.axis('off')
+# plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
 # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-# print(str(prediction_image_file_path))
-plot.savefig(prediction_image_file_path)
+prediction_image_file_path = os.path.abspath("prediction_image") + "/" + file_id + '.png'
+# plot.savefig(prediction_image_file_path)
 
 
 # Run the prediction method to compare prediction image against the model
@@ -140,7 +142,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
@@ -211,6 +213,11 @@ print(output)
 # }
 # output = json.dumps(output)
 # print(output)
+
+
+
+# if __name__ == '__main__':
+#     my_func()
 
 sys.stdout.flush()
 
