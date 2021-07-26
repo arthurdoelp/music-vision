@@ -18,7 +18,7 @@ import os, json
 import urllib.request
 import cloudinary
 import cloudinary.api
-from memory_profiler import profile
+# from memory_profiler import profile
 
 audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
@@ -77,14 +77,14 @@ audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
 # @profile
 # def my_func():
-kmodel = joblib.load(os.path.abspath("K_Means_Model.pkl"))
+kmodel = joblib.load(os.path.abspath("python/K_Means_Model.pkl"))
 # kpredictions = kmodel.predict(images)
 
 # model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
 # print(model_predictions_df.head())
 # model_predictions_df.to_csv(os.path.abspath("model_predictions.csv"))
 
-model_predictions_df = pd.read_csv(os.path.abspath("model_predictions.csv"))
+model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv"))
 
 # SONG PREDICTION
 
@@ -114,7 +114,7 @@ file_id = filename[:-4]
 # plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
 # prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
-prediction_image_file_path = os.path.abspath("prediction_image") + "/" + file_id + '.png'
+prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 # plot.savefig(prediction_image_file_path)
 
 
@@ -142,7 +142,7 @@ song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
 # song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
-song_performance_excel_filepath = os.path.abspath("songs_dataset_sample.csv")
+song_performance_excel_filepath = os.path.abspath("python/songs_dataset_sample.csv")
 songs_df = pd.read_csv(song_performance_excel_filepath)
 
 # Filter dataset to reflect only the most similar songs
