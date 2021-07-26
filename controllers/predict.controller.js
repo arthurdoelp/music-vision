@@ -29,7 +29,7 @@ exports.spectrogramController = (req, res) => {
         console.log("Starting Python Script");
         // // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
         // const pythonProcess = spawn('python', ["python/train.py", song_filename]);
-        const pythonProcess = spawn('python', ["python/train.py"]);
+        const pythonProcess = spawn('python', ["python/spectrogram.py", song_filename]);
 
         let result = '';
         pythonProcess.stdout.on('data', (data) => {
@@ -55,5 +55,21 @@ exports.spectrogramController = (req, res) => {
 
 exports.predictController = (req, res) => {
     console.log("Second Controller is connected!");
-    res.json({ data: "I think it worked?" })
+    const { spectrogram_image_file_path } = req.body;
+    // console.log(spectrogram_image_file_path)
+
+    const pythonProcess = spawn('python', ["python/train.py", spectrogram_image_file_path]);
+
+    let result = '';
+    pythonProcess.stdout.on('data', (data) => {
+        // console.log(data);
+        result += data.toString();
+    });
+
+    pythonProcess.stdout.on('end', () => {
+        // console.log(result)
+        console.log(JSON.parse(result));
+
+        res.status(200).json({ data: JSON.parse(result) })
+    });
 }

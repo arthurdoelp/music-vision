@@ -56,29 +56,31 @@ class Predict extends Component {
                     })
                         .then(res => {
                             console.log(res.data.data)
-                            // let song_name = file.name.slice(0, -4)
-                            // let similar_songs = res.data.data.similar_songs
-                            // for (let i = 0; i < similar_songs.length; i++) {
-                            //     for (let j = 0; j < similar_songs[i].length; j++) {
-                            //         similar_songs[i] = similar_songs[i].replace("_", " ")
-                            //     }
-                            // }
-                            // this.setState({
-                            //     file_name: file.name,
-                            //     uploadPercentage: 0,
-                            //     similar_songs: similar_songs,
-                            //     adjusted_r_squared: res.data.data.adjusted_r_squared,
-                            //     total_plays: res.data.data.total_plays,
-                            //     total_revenues: res.data.data.total_revenues,
-                            //     song_name: song_name
-                            // })
+                            let spectrogram_image_file_path = res.data.data.file_path
 
                             axios.post("/api/predict/new", {
-
+                                spectrogram_image_file_path
                             }).then(result => {
                                 console.log(result.data.data)
+                                let song_name = file.name.slice(0, -4)
+                                let similar_songs = result.data.data.similar_songs
+                                for (let i = 0; i < similar_songs.length; i++) {
+                                    for (let j = 0; j < similar_songs[i].length; j++) {
+                                        similar_songs[i] = similar_songs[i].replace("_", " ")
+                                    }
+                                }
+                                this.setState({
+                                    file_name: file.name,
+                                    uploadPercentage: 0,
+                                    similar_songs: similar_songs,
+                                    adjusted_r_squared: result.data.data.adjusted_r_squared,
+                                    total_plays: result.data.data.total_plays,
+                                    total_revenues: result.data.data.total_revenues,
+                                    song_name: song_name
+                                })
                             }).catch(error => {
                                 console.log(error)
+                                this.setState({ errorAlert: error.response.data.errors })
                             })
                         })
                         .catch(err => {
@@ -105,7 +107,7 @@ class Predict extends Component {
                         <div className="collapse navbar-collapse" id="navbarText">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="https://github.com/arthurdoelp/music-vision"><img alt="github" src="../../../Images/github.ico" height="25px"/></a>
+                                    <a className="nav-link active" aria-current="page" href="https://github.com/arthurdoelp/music-vision"><img alt="github" src="../../../Images/github.ico" height="25px" /></a>
                                 </li>
                             </ul>
                         </div>
