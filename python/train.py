@@ -20,38 +20,38 @@ import os, json
 # import cloudinary.api
 # from memory_profiler import profile
 
-# # audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
+# audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
-# # cloudinary.config( 
-# #   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
-# #   api_key = os.environ.get("CLOUDINARY_API_KEY"), 
-# #   api_secret = os.environ.get("CLOUDINARY_API_SECRET")
-# # )
+# cloudinary.config( 
+#   cloud_name = os.environ.get("CLOUDINARY_CLOUD_NAME"), 
+#   api_key = os.environ.get("CLOUDINARY_API_KEY"), 
+#   api_secret = os.environ.get("CLOUDINARY_API_SECRET")
+# )
 
-# # results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
+# results = cloudinary.api.resources(type = "upload", prefix = "song-spectrograms/", max_results = 150)
 
-# # urls = []
-# # for result in results["resources"]:
-# #     url = result["url"]
-# #     urls.append(url)
+# urls = []
+# for result in results["resources"]:
+#     url = result["url"]
+#     urls.append(url)
 
-# # images = []
-# # ids = []
+# images = []
+# ids = []
 
-# # # Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
-# # for url in urls:
-# #     resp = urllib.request.urlopen(url)
-# #     image = np.asarray(bytearray(resp.read()), dtype="uint8")
-# #     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-# #     # image = cv2.resize(image, (224, 224))
-# #     image = cv2.resize(image, (9, 6))
-# #     image = image[:,:,0]
-# #     images.append(image)
-# #     id = url[79:-11]
-# #     ids.append(id)
+# # Open image urls, convert image to np array, opencv will decode the uint8 image in color then resize the image to accommodate the tf model
+# for url in urls:
+#     resp = urllib.request.urlopen(url)
+#     image = np.asarray(bytearray(resp.read()), dtype="uint8")
+#     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
+#     # image = cv2.resize(image, (224, 224))
+#     image = cv2.resize(image, (432, 288))
+#     image = image[:,:,0]
+#     images.append(image)
+#     id = url[79:-11]
+#     ids.append(id)
 
 # # # Read images and reshape the images for prep for feature extraction
-# # images = np.array(np.float32(images).reshape(len(images), -1)/255)
+# images = np.array(np.float32(images).reshape(len(images), -1)/255)
 # # print(images)
 
 # # Create keras model for feature extraction
@@ -66,25 +66,25 @@ import os, json
 # # pred_images = predictions.reshape(images.shape[0], -1)
 
 # # K-Means Model
-# # k = 2
-# # kmodel = KMeans(n_clusters = k, random_state=728)
-# # kmodel.fit(images)
-# # kpredictions = kmodel.predict(images)
-# # print(kpredictions)
+# k = 70
+# kmodel = MiniBatchKMeans(n_clusters = k, random_state=728)
+# kmodel.fit(images)
+# kpredictions = kmodel.predict(images)
+# print(kpredictions)
 
-# # joblib_file = "K_Means_Model.pkl"
-# # joblib.dump(kmodel, joblib_file)
+# joblib_file = "K_Means_Model_70_432_288.pkl"
+# joblib.dump(kmodel, joblib_file)
 
-# # @profile
-# # def my_func():
-kmodel = joblib.load(os.path.abspath("python/K_Means_Model.pkl"))
+# model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
+# print(model_predictions_df.head())
+# model_predictions_df.to_csv(os.path.abspath("model_predictions_432_288.csv"))
+
+# # # @profile
+# # # def my_func():
+kmodel = joblib.load(os.path.abspath("python/K_Means_Model_70_432_288.pkl"))
 # kpredictions = kmodel.predict(images)
 
-# # model_predictions_df = pd.DataFrame({'kpredictions': list(kpredictions), 'ids': list(ids)}, columns=['kpredictions', 'ids'])
-# # print(model_predictions_df.head())
-# # model_predictions_df.to_csv(os.path.abspath("model_predictions.csv"))
-
-model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv"))
+model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions_432_288.csv"))
 
 # # SONG PREDICTION
 
@@ -118,6 +118,7 @@ model_predictions_df = pd.read_csv(os.path.abspath("python/model_predictions.csv
 # # plot.savefig(prediction_image_file_path)
 
 prediction_image_file_path = sys.argv[1]
+# prediction_image_file_path = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/prediction_image/03_Baby_Cant_Leave_it_Alone.png'
 
 # # Run the prediction method to compare prediction image against the model
 # # pred_image_dir = os.path.abspath("python/prediction_image")
@@ -125,7 +126,7 @@ prediction_image_file_path = sys.argv[1]
 # # pred_image_glob_dir = pred_image_dir + '/*.png'
 # # img = [cv2.resize(cv2.imread(file), (224, 224)) for file in glob.glob(pred_image_glob_dir)]
 # # img = [cv2.resize(cv2.imread(file), (108, 72)) for file in glob.glob(pred_image_glob_dir)]
-imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (9, 6))]
+imgs = [cv2.resize(cv2.imread(prediction_image_file_path), (432, 288))]
 imgs = [img[:,:,0] for img in imgs]
 imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 # # prediction = model.predict(img.reshape(-1, 224, 224, 3))
@@ -133,12 +134,11 @@ imgs = np.array(np.float32(imgs).reshape(len(imgs), -1)/255)
 kprediction = kmodel.predict(imgs)
 kprediction = str(kprediction).strip('[]')
 kprediction = int(kprediction)
-# # print("Cluster:",kprediction)
+# print("Cluster:",kprediction)
 
 
 # Collect Song Ids
 filtered_model_predictions_df = model_predictions_df[model_predictions_df["kpredictions"] == kprediction]["ids"].values.tolist()
-# print(filtered_model_predictions_df)
 song_ids = ["Date"] + filtered_model_predictions_df
 
 # Load Song Performance Dataset
@@ -217,8 +217,8 @@ print(output)
 
 
 
-# if __name__ == '__main__':
-#     my_func()
+# # if __name__ == '__main__':
+# #   my_func()
 
 sys.stdout.flush()
 
