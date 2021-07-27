@@ -185,7 +185,7 @@ class Predict extends Component {
                                                 style={{ width: `${uploadPercentage}%` }}></div>
                                         </div>
                                         <div className="text-center">
-                                            <p>This will take about 1.5 minutes. Sorry for the wait. There's a lot going on behind the scenes...</p>
+                                            <p>This could take up to 1 minute. Most likely about 30 seconds. Sorry for the wait. There's a lot going on behind the scenes...</p>
                                         </div>
                                     </div>
                                 </div>
