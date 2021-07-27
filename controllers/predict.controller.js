@@ -54,13 +54,14 @@ exports.spectrogramController = (req, res) => {
             // console.log(result)
             console.log(JSON.parse(result));
 
-            // fs.unlink(file_path, (err) => {
-            //     if (err) {
-            //         console.error(err)
-            //         return
-            //     }
-            //     //file removed
-            // })
+            fs.unlink(file_path, (err) => {
+                if (err) {
+                    console.error(err)
+                    return
+                }
+                //file removed
+                console.log("Song File removed")
+            })
             res.json({ data: JSON.parse(result) })
         });
     })

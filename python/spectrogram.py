@@ -10,11 +10,8 @@ import audiosegment
 # SONG PREDICTION
 # @profile
 # def my_func():
-# filename = sys.argv[1]
-# filename = '/Users/arthurdoelp/dev/projects/python-projects/music-vision/uploads/03_Baby_Cant_Leave_it_Alone.m4a'
-# filename = "/Users/arthurdoelp/dev/projects/python-projects/music-vision/python/uploads/03_Baby_Cant_Leave_it_Alone.m4a"
-filename = '03_Baby_Cant_Leave_it_Alone.m4a'
-# filepath = os.path.abspath(os.path.join("python/uploads", filename))
+filename = sys.argv[1]
+# filename = '03_Baby_Cant_Leave_it_Alone.m4a'
 filepath = os.path.abspath(os.path.join("python/uploads", filename))
 file_id = filename[:-4]
 # file_id = filename[13:-4]
@@ -34,7 +31,6 @@ plot.pcolormesh(times, freqs, amplitudes, shading='auto')
 plot.axis('off')
 plot.subplots_adjust(left=0,right=1,bottom=0,top=1)
 # Save the file to the prediction_image folder with the file name
-# prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 prediction_image_file_path = os.path.abspath("python/prediction_image") + "/" + file_id + '.png'
 plot.savefig(prediction_image_file_path)
 
