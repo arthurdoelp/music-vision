@@ -7,7 +7,17 @@ const fs = require('fs');
 exports.spectrogramController = (req, res) => {
     console.log("Controller connected!");
 
-    const upload = multer({ storage: multer.memoryStorage() }).single('file')
+    // const upload = multer({ storage: multer.memoryStorage() }).single('file')
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, 'python/uploads/')
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname)
+        }
+    })
+
+    const upload = multer({ storage: storage }).single('file')
 
     upload(req, res, function (err) {
 
@@ -23,8 +33,11 @@ exports.spectrogramController = (req, res) => {
         }
         let file_path = 'python/uploads/' + song_filename;
 
-        fs.writeFile(file_path, song.buffer, { encoding: 'base64' }, function (err) {
-            console.log('File created');
+        // fs.writeFile(file_path, song.buffer, { encoding: 'base64' }, function (err) {
+        //     console.log('File created');
+        // });
+        fs.rename(req.file.path, file_path, function(err) {
+            console.log('File created and renamed!');
         });
         console.log("Starting Python Script");
         // // const pythonProcess = spawn('python',["path/to/script.py", arg1, arg2, ...]);
