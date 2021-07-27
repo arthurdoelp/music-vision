@@ -21,7 +21,7 @@ file_id = filename[:-4]
 # file_id = filename[69:-4]
 # Create the audiosegment file
 seg = audiosegment.from_file(filepath)
-seg = seg[:30000]
+seg = seg[:60000]
 # Convert any 2 channel tracks to mono so that it can be converted into a spec
 seg = seg.set_channels(1)
 # Create the spectrogram
