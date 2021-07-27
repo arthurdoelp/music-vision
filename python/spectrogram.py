@@ -3,7 +3,7 @@ import os, json
 import numpy as np
 import matplotlib.pyplot as plot
 import audiosegment
-from memory_profiler import profile
+# from memory_profiler import profile
 
 # audiosegment.converter = '/usr/local/Cellar/ffmpeg/4.4_2'
 
@@ -21,7 +21,7 @@ file_id = filename[:-4]
 # file_id = filename[69:-4]
 # Create the audiosegment file
 seg = audiosegment.from_file(filepath)
-seg = seg[:30000]
+seg = seg[:10000]
 # Convert any 2 channel tracks to mono so that it can be converted into a spec
 seg = seg.set_channels(1)
 # Create the spectrogram
