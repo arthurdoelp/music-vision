@@ -22,6 +22,7 @@ exports.spectrogramController = (req, res) => {
     upload(req, res, function (err) {
 
         let song = req.file
+        console.log(song)
         let song_filename = song.originalname;
         for (let i = 0; i < song_filename.length; i++) {
             song_filename = song_filename.replace(" ", "_")
