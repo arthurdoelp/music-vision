@@ -225,3 +225,6 @@ sys.stdout.flush()
 
 
 # https://stackoverflow.com/questions/56739322/pydub-cant-find-ffmpeg-although-its-installed-and-in-path
+# https://www.kaggle.com/prmohanty/python-how-to-save-and-load-ml-models
+# https://towardsdatascience.com/k-means-clustering-with-scikit-learn-6b47a369a83c
+# https://towardsdatascience.com/using-k-means-clustering-for-image-segregation-fd80bea8412d
